@@ -40,7 +40,9 @@ public @interface Component {
 
 }
 ```
+
 `@Singleton` 
+
 ```java
 @Component(scope = Scope.SINGLETON)
 @Target({ ElementType.TYPE, ElementType.METHOD })
@@ -55,7 +57,9 @@ public @interface Singleton {
 }
 
 ```
+
 `@Prototype`
+
 ```java
 @Retention(RetentionPolicy.RUNTIME)
 @Component(scope = Scope.PROTOTYPE)
@@ -72,6 +76,7 @@ public @interface Prototype {
 ```
 
 `@Configuration`
+
 ```java
 @Target(ElementType.TYPE)
 @Component(scope = Scope.SINGLETON)
@@ -79,7 +84,9 @@ public @interface Configuration {
 
 }
 ```
+
 `@Service`
+
 ```java
 @Component(scope = Scope.SINGLETON)
 @Target({ ElementType.TYPE, ElementType.METHOD })
@@ -94,6 +101,7 @@ public @interface Service {
 - 使用`@Resource`注入
 - 使用`@Inject`注入
 - 可自定义注解和实现`PropertyValueResolver`：
+
 ```java
 @FunctionalInterface
 public interface PropertyValueResolver {
@@ -104,7 +112,9 @@ public interface PropertyValueResolver {
     PropertyValue resolveProperty(Field field) throws ContextException;
 }
 ```
+
 - 注入示例：
+
 ```java
 @Controller
 @SuppressWarnings("serial")
@@ -174,7 +184,9 @@ public class LoginController implements Constant, ServletContextAware {
 }
   
 ```
+
 - 实现原理
+
 ```java
 public class AutowiredPropertyResolver implements PropertyValueResolver {
     private static final Class<? extends Annotation> NAMED_CLASS = ClassUtils.loadClass("javax.inject.Named");
@@ -234,6 +246,7 @@ public class AutowiredPropertyResolver implements PropertyValueResolver {
 看到这你应该明白了注入原理了
 
 ### 使用`@Autowired`构造器注入
+
 ```java
 // cn.taketoday.web.servlet.DispatcherServlet
 public class DispatcherServlet implements Servlet, Serializable {
@@ -559,6 +572,7 @@ public class FreeMarkerViewResolver extends AbstractViewResolver implements Init
 
 ### 使用`@Props` 注入Properties或Bean
 - 构造器
+
 ```java
     @Autowired
     public PropsBean(@Props(prefix = "site.") Bean bean) {
@@ -573,7 +587,9 @@ public class FreeMarkerViewResolver extends AbstractViewResolver implements Init
         //-------
     }
 ```
+
 - Field
+
 ```java
     @Props(prefix = "site.")
     Bean bean;
@@ -582,7 +598,9 @@ public class FreeMarkerViewResolver extends AbstractViewResolver implements Init
     @Props(prefix = "site.") 
     Properties properties
 ```
+
 - 实现原理
+
 ```java
 @Order(Ordered.HIGHEST_PRECEDENCE - 2)
 public class PropsPropertyResolver implements PropertyValueResolver {
@@ -734,9 +752,7 @@ public class RedisConfiguration {
 
 ```
 
-
 ### 生命周期
-
 
 ```java
 package test.context;
@@ -801,7 +817,6 @@ public class LifecycleBean implements InitializingBean, DisposableBean {
 
 }
 ```
-
 
 ```log
 2019-07-25 23:14:37.712  INFO - [            main] c.t.context.AbstractApplicationContext    150 - Starting Application Context at [2019-07-25 23:14:37.707].
